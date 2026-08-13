@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-export default function PreparationScreen({ topic, onComplete }) {
-  const [timeLeft, setTimeLeft] = useState(60);
+export default function PreparationScreen({ topic, prepTime, onComplete }) {
+  const [timeLeft, setTimeLeft] = useState(prepTime);
 
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -16,7 +16,9 @@ export default function PreparationScreen({ topic, onComplete }) {
 
   const radius = 60;
   const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (timeLeft / 60) * circumference;
+  // Prevent division by zero if prepTime is 0
+  const maxTime = Math.max(prepTime, 1); 
+  const strokeDashoffset = circumference - (timeLeft / maxTime) * circumference;
 
   return (
     <div className="flex flex-col items-center justify-center flex-grow animate-fade-in-up">

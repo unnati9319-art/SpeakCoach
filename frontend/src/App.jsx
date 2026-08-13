@@ -9,6 +9,7 @@ function App() {
   const [currentScreen, setCurrentScreen] = useState('landing');
   const [userName, setUserName] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('');
+  const [prepTime, setPrepTime] = useState(60);
   const [transcript, setTranscript] = useState('');
 
   const goToScreen = (screen) => setCurrentScreen(screen);
@@ -33,8 +34,9 @@ function App() {
           {currentScreen === 'topic' && (
             <TopicSelectionScreen 
               userName={userName} 
-              onSelect={(topic) => {
+              onSelect={(topic, time) => {
                 setSelectedTopic(topic);
+                setPrepTime(time);
                 goToScreen('prep');
               }} 
             />
@@ -43,6 +45,7 @@ function App() {
           {currentScreen === 'prep' && (
             <PreparationScreen 
               topic={selectedTopic} 
+              prepTime={prepTime}
               onComplete={() => goToScreen('recording')} 
             />
           )}
