@@ -96,13 +96,13 @@ export default function RecordingScreen({ topic, onComplete }) {
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center flex-grow text-center animate-in fade-in">
-        <div className="bg-red-50 border border-red-100 text-red-600 p-6 rounded-xl mb-6 max-w-md">
-          <p>{error}</p>
+      <div className="flex flex-col items-center justify-center flex-grow text-center animate-fade-in-up">
+        <div className="bg-red-900/20 border border-red-500/30 text-red-400 p-6 rounded-xl mb-6 max-w-md backdrop-blur-md">
+          <p className="text-lg">{error}</p>
         </div>
         <button 
           onClick={handleRetry}
-          className="bg-slate-800 text-white px-6 py-3 rounded-lg hover:bg-slate-700 transition"
+          className="bg-dark-700 border border-dark-border text-white px-8 py-4 rounded-xl hover:bg-dark-600 transition shadow-lg"
         >
           Try Again
         </button>
@@ -111,29 +111,35 @@ export default function RecordingScreen({ topic, onComplete }) {
   }
 
   return (
-    <div className="flex flex-col h-full animate-in fade-in duration-500">
-      <div className="flex items-center justify-between mb-6">
+    <div className="flex flex-col h-full animate-fade-in-up">
+      <div className="flex items-center justify-between mb-8">
         <div>
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Topic</span>
-          <h2 className="text-lg font-medium text-slate-800 mt-1">{topic}</h2>
+          <span className="text-xs font-semibold uppercase tracking-widest text-primary-400">Topic</span>
+          <h2 className="text-xl font-medium text-white mt-1">{topic}</h2>
         </div>
         
         {isRecording && (
-          <div className="flex items-center space-x-2 bg-red-50 border border-red-100 text-red-500 px-3 py-1.5 rounded-full animate-pulse">
-            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-            <span className="text-sm font-medium">Recording</span>
+          <div className="flex items-center space-x-3 bg-primary-500/10 border border-primary-500/30 text-primary-400 px-4 py-2 rounded-full shadow-[0_0_15px_rgba(139,92,246,0.3)] animate-pulse">
+            <div className="w-2.5 h-2.5 bg-primary-500 rounded-full shadow-[0_0_8px_rgba(139,92,246,0.8)]"></div>
+            <span className="text-sm font-semibold uppercase tracking-wide">Recording</span>
           </div>
         )}
       </div>
 
-      <div className="flex-grow bg-slate-50 rounded-xl p-5 mb-6 overflow-y-auto border border-slate-200 min-h-[250px] max-h-[350px]">
+      <div className="flex-grow bg-dark-900/50 rounded-2xl p-6 mb-8 overflow-y-auto border border-dark-border min-h-[250px] max-h-[350px] custom-scrollbar relative shadow-inner">
         {transcript ? (
-          <p className="text-slate-700 text-lg leading-relaxed whitespace-pre-wrap">{transcript}</p>
+          <p className="text-slate-300 text-xl leading-relaxed whitespace-pre-wrap font-light">{transcript}</p>
         ) : (
           <div className="h-full flex items-center justify-center">
-            <p className="text-slate-400 text-lg italic animate-pulse">
-              Listening... start speaking.
-            </p>
+            <div className="flex flex-col items-center animate-pulse opacity-50">
+               <div className="flex space-x-1.5 mb-5">
+                  <div className="w-1.5 h-6 bg-primary-400 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
+                  <div className="w-1.5 h-10 bg-secondary-400 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
+                  <div className="w-1.5 h-8 bg-primary-400 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
+                  <div className="w-1.5 h-5 bg-secondary-400 rounded-full animate-bounce" style={{animationDelay: '450ms'}}></div>
+               </div>
+               <p className="text-slate-400 text-lg tracking-wide">Listening... start speaking.</p>
+            </div>
           </div>
         )}
       </div>
@@ -141,10 +147,11 @@ export default function RecordingScreen({ topic, onComplete }) {
       <div className="flex justify-center mt-auto">
         <button
           onClick={handleStop}
-          className="flex items-center space-x-2 bg-slate-800 text-white font-medium px-8 py-3.5 rounded-xl hover:bg-slate-700 transition-colors shadow-sm hover:shadow active:scale-95"
+          className="group relative flex items-center space-x-2 bg-dark-700 border border-dark-border text-white font-medium px-8 py-4 rounded-xl hover:border-red-500/50 transition-all duration-300 shadow-lg hover:shadow-red-500/20 active:scale-95 overflow-hidden"
         >
-          <Square size={18} fill="currentColor" />
-          <span>Stop Recording</span>
+          <div className="absolute inset-0 bg-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <Square size={18} fill="currentColor" className="text-red-400 relative z-10" />
+          <span className="relative z-10 text-lg tracking-wide">Stop Recording</span>
         </button>
       </div>
     </div>

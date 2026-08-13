@@ -14,53 +14,61 @@ export default function PreparationScreen({ topic, onComplete }) {
     return () => clearInterval(timer);
   }, [timeLeft, onComplete]);
 
-  const radius = 50;
+  const radius = 60;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (timeLeft / 60) * circumference;
 
   return (
-    <div className="flex flex-col items-center justify-center flex-grow animate-in fade-in duration-500">
-      <div className="text-center mb-10">
-        <h2 className="text-lg font-medium text-slate-500 mb-2 uppercase tracking-wide">Your topic is:</h2>
-        <h3 className="text-2xl md:text-3xl font-semibold text-slate-800 px-4 leading-tight">{topic}</h3>
+    <div className="flex flex-col items-center justify-center flex-grow animate-fade-in-up">
+      <div className="text-center mb-12">
+        <h2 className="text-sm font-semibold text-primary-400 mb-3 uppercase tracking-[0.2em]">Your topic is</h2>
+        <h3 className="text-3xl md:text-4xl font-bold text-white px-4 leading-tight">{topic}</h3>
       </div>
 
-      <div className="relative flex items-center justify-center mb-10">
-        <svg className="w-40 h-40 transform -rotate-90">
+      <div className="relative flex items-center justify-center mb-12 animate-pulse-glow">
+        <svg className="w-48 h-48 transform -rotate-90">
           <circle
-            cx="80"
-            cy="80"
+            cx="96"
+            cy="96"
             r={radius}
-            stroke="currentColor"
-            strokeWidth="6"
+            stroke="rgba(255,255,255,0.05)"
+            strokeWidth="8"
             fill="transparent"
-            className="text-slate-100"
           />
           <circle
-            cx="80"
-            cy="80"
+            cx="96"
+            cy="96"
             r={radius}
-            stroke="currentColor"
-            strokeWidth="6"
+            stroke="url(#gradient)"
+            strokeWidth="8"
             fill="transparent"
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
-            className="text-slate-600 transition-all duration-1000 ease-linear"
+            className="transition-all duration-1000 ease-linear"
             strokeLinecap="round"
+            style={{ filter: 'drop-shadow(0 0 8px rgba(139,92,246,0.5))' }}
           />
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#8b5cf6" />
+              <stop offset="100%" stopColor="#06b6d4" />
+            </linearGradient>
+          </defs>
         </svg>
         <div className="absolute flex flex-col items-center justify-center">
-          <span className="text-5xl font-semibold text-slate-800">{timeLeft}</span>
+          <span className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-slate-400">
+            {timeLeft}
+          </span>
         </div>
       </div>
 
-      <p className="text-center text-slate-600 max-w-sm mb-6">
+      <p className="text-center text-slate-400 max-w-md mb-8 text-lg">
         Think about what you'll say. Recording starts automatically when the timer ends.
       </p>
 
       <button 
         onClick={onComplete}
-        className="text-sm text-slate-400 hover:text-slate-600 underline underline-offset-4 transition-colors"
+        className="text-sm font-medium text-slate-500 hover:text-primary-400 transition-colors tracking-wide uppercase"
       >
         Skip preparation
       </button>
