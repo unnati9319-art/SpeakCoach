@@ -9,7 +9,8 @@ export default function FeedbackScreen({ transcript, onRetry }) {
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/feedback', {
+        
+        const response = await fetch('https://fluent-ai-1efi.onrender.com/api/feedback', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ transcript })
